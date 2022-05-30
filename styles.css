@@ -1,0 +1,8 @@
+body{
+    margin: 0;
+}
+progress{
+    position: sticky;
+    top: 0;
+    width: 100%;
+}
