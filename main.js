@@ -73,13 +73,35 @@ function showPokemon(url) {
             abilityRow.appendChild(cell);
         }
         for(let s of pokemon.stats){
-            console.table(s);
             let statProg = document.getElementById(`${s.stat.name}-stat`);
+            statProg.addEventListener("mouseover", mouseHover)
+            statProg.addEventListener("mouseleave", mouseExit)
             statProg.value = s.base_stat;
         }
 
         document.getElementById("pokeModal").style.display = "block";
     })();
+}
+
+function mouseHover(event){
+    updateTooltip(event);
+    let tooltip = document.getElementById("tooltip-span");
+    tooltip.style.display = "block";
+    tooltip.innerText = event.target.value;
+    document.addEventListener("mousemove", updateTooltip);
+}
+
+function updateTooltip(event){
+    let x = event.clientX;
+    let y = event.clientY;
+    let tooltip = document.getElementById("tooltip-span");
+    tooltip.style.top = (y + 20) + 'px';
+    tooltip.style.left = (x + 20) + 'px';
+}
+
+function mouseExit(event){
+    document.removeEventListener("mousemove", updateTooltip);
+    document.getElementById("tooltip-span").style.display = "none";
 }
 
 function toggleShiny(event) {

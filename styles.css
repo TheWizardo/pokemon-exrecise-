@@ -4,6 +4,8 @@ body {
 
 #prog::-moz-progress-bar { background: green; }
 #prog::-webkit-progress-value { background: green; }
+#prog::-ms-progress-value { background: green; }
+#prog::-o-progress-value { background: green; }
 progress {
     position: sticky;
     top: 0;
@@ -51,6 +53,11 @@ progress {
 
 table {
     width: 100%;
+    white-space: nowrap;
+}
+
+#stats-table th{
+    width: 5%;
 }
 
 th {
@@ -77,4 +84,12 @@ th {
     border: 1px solid black;
     border-radius: 0.3em;
     text-align: center;
+}
+
+#tooltip-span {
+    display: none;
+    position: fixed;
+    overflow: hidden;
+    z-index: 99;
+    border: 1px solid black;
 }
