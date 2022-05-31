@@ -2,7 +2,6 @@ body {
     margin: 0;
 }
 
-
 /* color of progress bar at the top */
 #prog::-moz-progress-bar { background: green; }
 #prog::-webkit-progress-value { background: green; }
@@ -12,8 +11,13 @@ progress {
     position: sticky;
     top: 0;
     width: 100%;
-    color: green; /* fallback */
+    background: green; /* fallback */
 }
+@-moz-document url-prefix() {
+    progress {
+        background: #777;
+    }
+  }
 
 /* card modal styling */
 .modal {
