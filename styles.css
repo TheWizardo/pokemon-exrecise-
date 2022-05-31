@@ -2,10 +2,13 @@ body {
     margin: 0;
 }
 
+#prog::-moz-progress-bar { background: green; }
+#prog::-webkit-progress-value { background: green; }
 progress {
     position: sticky;
     top: 0;
     width: 100%;
+    color: green; 
 }
 
 .modal {
@@ -46,6 +49,26 @@ progress {
     font-weight: bold;
 }
 
+table {
+    width: 100%;
+}
+
+th {
+    text-align: left;
+}
+
+#pokeImage {
+    width: 200px;
+    height: 200px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#pokeName {
+    text-align: center;
+}
+
 .option-div {
     min-width: 100px;
     width: 75%;
@@ -54,5 +77,4 @@ progress {
     border: 1px solid black;
     border-radius: 0.3em;
     text-align: center;
-    vertical-align: middle;
 }
