@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="types.css">
     <script src="main.js"></script>
@@ -18,10 +19,61 @@
     <div id="pokeModal" class="modal">
         <div class="modal-content">
             <button class="close" onclick="closeModal()">&times;</button>
-            <h2 id="pokeName"></h2>
+            <h1 id="pokeName"></h1>
             <img id="pokeImage">
-            <h3>Type</h3>
+            <h2>Type</h2>
             <div id="type-div"></div>
+            <hr>
+            <table>
+                <tr>
+                    <th>Weigth:</th>
+                    <td id="pokeWeight"></td>
+                    <th>Height:</th>
+                    <td id="pokeHeight"></td>
+                </tr>
+                <tr id="ability-row">
+                </tr>
+            </table>
+            <hr>
+            <h2>Stats</h2>
+            <table>
+                <tr>
+                    <th>HP</th>
+                    <td>
+                        <progress id="hp-stat" value="0" max="250"></progress>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Atk</th>
+                    <td>
+                        <progress id="attack-stat" value="0" max="250"></progress>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Def</th>
+                    <td>
+                        <progress id="defense-stat" value="0" max="250"></progress>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Sp. Atk</th>
+                    <td>
+                        <progress id="special-attack-stat" value="0" max="250"></progress>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Sp. Def</th>
+                    <td>
+                        <progress id="special-defense-stat" value="0" max="250"></progress>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Speed</th>
+                    <td>
+                        <progress id="speed-stat" value="0" max="250"></progress>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 </body>

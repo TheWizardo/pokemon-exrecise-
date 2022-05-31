@@ -13,17 +13,12 @@ async function getDataFromURL(url) {
 function loadDivs(objs, enrty) {
     for (let obj of objs[enrty]) {
         let newDiv = document.createElement("div");
-        if (obj.name !== undefined) {
-            newDiv.innerText = obj.name.charAt(0).toUpperCase() + obj.name.slice(1)
-        }
-        else {
-            newDiv.innerText = obj.pokemon.name.charAt(0).toUpperCase() + obj.pokemon.name.slice(1);
-        }
+        newDiv.innerText = obj.name !== undefined ? capitalize(obj.name) : capitalize(obj.pokemon.name);
         newDiv.setAttribute("next-info", obj.url || obj.pokemon.url)
         newDiv.addEventListener("click", divClicked)
         newDiv.className = `option-div`;
         document.getElementById("container-div").append(newDiv);
-    };
+    }
 }
 
 function divClicked(event) {
@@ -46,8 +41,13 @@ function divClicked(event) {
 function showPokemon(url) {
     (async () => {
         let pokemon = await getDataFromURL(url);
-        document.getElementById("pokeName").innerHTML = `${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)} <span class="pokedex-id">#${pokemon.id}</span>`;
-        document.getElementById("pokeImage").setAttribute("src", pokemon.sprites.front_default)
+
+        document.getElementById("pokeName").innerHTML = `${capitalize(pokemon.name)} <span class="pokedex-id">#${pokemon.id}</span>`;
+
+        let image = document.getElementById("pokeImage");
+        image.setAttribute("src", pokemon.sprites.front_default);
+        image.addEventListener("click", toggleShiny);
+
         let types = document.getElementById("type-div");
         types.innerHTML = '';
         for (let t of pokemon.types) {
@@ -57,10 +57,67 @@ function showPokemon(url) {
             types.appendChild(newType);
         }
 
+        let weight = document.getElementById("pokeWeight");
+        weight.innerText = `${pokemon.weight / 10} Kg`;
+        weight.addEventListener("click", wUnitConvert)
+
+        let height = document.getElementById("pokeHeight");
+        height.innerText = `${pokemon.height * 10} Cm`;
+        height.addEventListener("click", hUnitConvert)
+
+        let abilityRow = document.getElementById("ability-row");
+        abilityRow.innerHTML = '<th>Abilities:</th>';
+        for (let a of pokemon.abilities) {
+            let cell = document.createElement("td");
+            cell.innerText = capitalize(a.ability.name);
+            abilityRow.appendChild(cell);
+        }
+        for(let s of pokemon.stats){
+            console.table(s);
+            let statProg = document.getElementById(`${s.stat.name}-stat`);
+            statProg.value = s.base_stat;
+        }
+
         document.getElementById("pokeModal").style.display = "block";
     })();
 }
 
+function toggleShiny(event) {
+    let curSrc = event.target.getAttribute('src');
+    if (curSrc.lastIndexOf('shiny') < 0) {
+        event.target.setAttribute('src', curSrc.slice(0, 73) + 'shiny/' + curSrc.slice(73))
+    }
+    else {
+        event.target.setAttribute('src', curSrc.slice(0, 73) + curSrc.slice(79))
+    }
+}
+
+function wUnitConvert(event) {
+    let quantity = parseFloat(event.target.innerText.split(' ')[0]);
+    let units = event.target.innerText.split(' ')[1];
+    if (units === "Kg") {
+        document.getElementById('pokeWeight').innerText = `${Math.floor(100 * quantity * 2.2) / 100} Lbs`;
+    }
+    else {
+        document.getElementById('pokeWeight').innerText = `${Math.round(10 * quantity / 2.2) / 10} Kg`;
+    }
+}
+
+function hUnitConvert(event) {
+    let quantity = parseFloat(event.target.innerText.split(' ')[0]);
+    let units = event.target.innerText.split(' ')[1];
+    if (units === "Cm") {
+        document.getElementById('pokeHeight').innerText = `${Math.round(10 * quantity / 2.54) / 10} In`;
+    }
+    else {
+        document.getElementById('pokeHeight').innerText = `${Math.round(quantity * 2.54)} Cm`;
+    }
+}
+
 function closeModal() {
     document.getElementById("pokeModal").style.display = "none";
+}
+
+function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1)
 }
