@@ -5,18 +5,21 @@
     });
 })();
 
+// capitalizes the first letter of the word
 function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+// fetching data from a given url
 async function getDataFromURL(url) {
     let rawRes = await fetch(url);
     return rawRes.json();
 }
 
+// loading the current divs on screen from selfURL
 async function loadDivs(grandparentURL, parentURL, selfURL, enrty) {
-    console.log(selfURL, enrty);
     let data = await getDataFromURL(selfURL);
+
     for (let obj of data[enrty]) {
         let newDiv = document.createElement("div");
         newDiv.innerText = obj.name !== undefined ? capitalize(obj.name) : capitalize(obj.pokemon.name);
@@ -30,6 +33,7 @@ async function loadDivs(grandparentURL, parentURL, selfURL, enrty) {
     }
 }
 
+// handeling of div clicking
 function divClicked(event) {
     document.getElementById("back-btn").disabled = false;
     (async () => {
@@ -47,6 +51,7 @@ function divClicked(event) {
     })();
 }
 
+// displaying the selected pokemon modal
 function showPokemon(url) {
     (async () => {
         let pokemon = await getDataFromURL(url);
@@ -92,6 +97,7 @@ function showPokemon(url) {
     })();
 }
 
+// updating tooltip place
 function updateTooltip(event) {
     let x = event.clientX;
     let y = event.clientY;
@@ -100,6 +106,7 @@ function updateTooltip(event) {
     tooltip.style.left = (x + 20) + 'px';
 }
 
+// showing tooltip
 function mouseHover(event) {
     updateTooltip(event);
     let tooltip = document.getElementById("tooltip-span");
@@ -108,11 +115,13 @@ function mouseHover(event) {
     document.addEventListener("mousemove", updateTooltip);
 }
 
+// hiding tooltip and stopping update
 function mouseExit(event) {
     document.removeEventListener("mousemove", updateTooltip);
     document.getElementById("tooltip-span").style.display = "none";
 }
 
+// toggling between shiny and default images
 function toggleShiny(event) {
     let curSrc = event.target.getAttribute('src');
     if (curSrc.lastIndexOf('shiny') < 0) {
@@ -123,6 +132,7 @@ function toggleShiny(event) {
     }
 }
 
+// unit convertion for weight
 function wUnitConvert(event) {
     let quantity = parseFloat(event.target.innerText.split(' ')[0]);
     let units = event.target.innerText.split(' ')[1];
@@ -134,6 +144,7 @@ function wUnitConvert(event) {
     }
 }
 
+// unit convertion for height
 function hUnitConvert(event) {
     let quantity = parseFloat(event.target.innerText.split(' ')[0]);
     let units = event.target.innerText.split(' ')[1];
@@ -145,11 +156,13 @@ function hUnitConvert(event) {
     }
 }
 
+// closing the modal
 function closeModal() {
     document.getElementById("prog").value -= 100 / 3;
     document.getElementById("pokeModal").style.display = "none";
 }
 
+// handaling back button press
 function goBack(btn) {
     const progBar = document.getElementById("prog");
     progBar.value -= 100 / 3;
