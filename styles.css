@@ -2,6 +2,8 @@ body {
     margin: 0;
 }
 
+
+/* color of progress bar at the top */
 #prog::-moz-progress-bar { background: green; }
 #prog::-webkit-progress-value { background: green; }
 #prog::-ms-progress-value { background: green; }
@@ -10,45 +12,29 @@ progress {
     position: sticky;
     top: 0;
     width: 100%;
-    color: green; 
+    color: green; /* fallback */
 }
 
+/* card modal styling */
 .modal {
     display: none;
-    /* Hidden by default */
     position: fixed;
-    /* Stay in place */
     z-index: 1;
-    /* Sit on top */
     left: 0;
     top: 0;
     width: 100%;
-    /* Full width */
     height: 100%;
-    /* Full height */
     overflow: auto;
-    /* Enable scroll if needed */
-    background-color: rgb(0, 0, 0);
-    /* Fallback color */
+    background-color: rgb(0, 0, 0); /* fallback */
     background-color: rgba(0, 0, 0, 0.4);
-    /* Black w/ opacity */
 }
 
 .modal-content {
     background-color: #fefefe;
     margin: 15% auto;
-    /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-    /* Could be more or less, depending on screen size */
-}
-
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
 }
 
 table {
@@ -57,7 +43,7 @@ table {
 }
 
 #stats-table th{
-    width: 5%;
+    width: 5%; /* ensuring th of stat wont take more place than needed */
 }
 
 th {
@@ -77,6 +63,12 @@ th {
 }
 
 .option-div {
+    background: -webkit-linear-gradient(30deg, #898f96, #cddae9);
+    background: -ms-linear-gradient(30deg, #898f96, #cddae9);
+    background: -moz-linear-gradient(30deg, #898f96, #cddae9);
+    background: -o-linear-gradient(30deg, #898f96, #cddae9);
+    background: linear-gradient(30deg, #898f96, #cddae9);
+    line-height: 5vh;
     min-width: 100px;
     width: 75%;
     height: 5vh;
@@ -92,4 +84,7 @@ th {
     overflow: hidden;
     z-index: 99;
     border: 1px solid black;
+    background-color: #888;
+    padding: 0.1em 0.5em;
+    opacity: 88%;
 }
