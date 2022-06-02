@@ -1,7 +1,9 @@
+let pastInfo = [];
+
 (function () {
     let baseURL = `https://pokeapi.co/api/v2/pokemon-shape`;
     document.addEventListener('DOMContentLoaded', async function () {
-        await loadDivs("", "", baseURL, "results");
+        await loadDivs(baseURL, "results");
     });
 })();
 
@@ -17,16 +19,14 @@ async function getDataFromURL(url) {
 }
 
 // loading the current divs on screen from selfURL
-async function loadDivs(grandparentURL, parentURL, selfURL, enrty) {
-    let data = await getDataFromURL(selfURL);
+async function loadDivs(dataURL, enrty) {
+    let data = await getDataFromURL(dataURL);
 
     for (let obj of data[enrty]) {
         let newDiv = document.createElement("div");
         newDiv.innerText = obj.name !== undefined ? capitalize(obj.name) : capitalize(obj.pokemon.name);
-        newDiv.setAttribute("grandparent-info", grandparentURL);
-        newDiv.setAttribute("parent-info", parentURL);
-        newDiv.setAttribute("self-info", selfURL);
         newDiv.setAttribute("next-info", obj.url || obj.pokemon.url);
+        newDiv.setAttribute("self-info", dataURL);
         newDiv.addEventListener("click", divClicked);
         newDiv.className = `option-div`;
         document.getElementById("container-div").append(newDiv);
@@ -43,7 +43,8 @@ function divClicked(event) {
 
         if (Math.floor(progBar.value) < 80) {
             document.getElementById("container-div").innerHTML = '';
-            await loadDivs(event.target.getAttribute("parent-info"), event.target.getAttribute("self-info"), nextURL, Math.floor(progBar.value) < 40 ? "pokemon_species" : "varieties");
+            pastInfo.push(event.target.getAttribute("self-info"));
+            await loadDivs(nextURL, Math.floor(progBar.value) < 40 ? "pokemon_species" : "varieties");
         }
         else {
             showPokemon(nextURL)
@@ -171,10 +172,8 @@ function goBack(btn) {
     }
 
     let firstDiv = document.getElementById("container-div").firstChild;
-    let parentURL = firstDiv.getAttribute("parent-info");
-    let grandparentURL = firstDiv.getAttribute("grandparent-info");
     document.getElementById("container-div").innerHTML = '';
     (async () => {
-        await loadDivs("", grandparentURL, parentURL, Math.floor(progBar.value) < 20 ? "results" : "pokemon_species");
+        await loadDivs(pastInfo.pop(), Math.floor(progBar.value) < 20 ? "results" : "pokemon_species");
     })();
 }
